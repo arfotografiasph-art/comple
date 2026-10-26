@@ -76,7 +76,6 @@
       --border-accent: rgba(203, 213, 225, 0.25);
     }
 
-    /* Custom Ambient Background Styling */
     body {
       background-color: #030712;
       background-image: 
@@ -86,7 +85,6 @@
       background-attachment: fixed;
     }
 
-    /* Custom Scrollbars */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -102,7 +100,6 @@
       background: #334155;
     }
 
-    /* Fine Art Glassmorphism */
     .glass-card {
       background: rgba(15, 23, 42, 0.65);
       backdrop-filter: blur(16px);
@@ -128,7 +125,6 @@
       background: var(--gradient-accent);
     }
 
-    /* Photo Card Hover Effect */
     .photo-card {
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
     }
@@ -165,9 +161,9 @@
         </div>
 
         <!-- Logo Header -->
-        <div class="text-center mb-8">
-          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-900 border border-accent-400/30 text-accent-400 mb-4 shadow-xl shadow-accent-500/10">
-            <i data-lucide="camera" class="w-8 h-8"></i>
+        <div class="text-center mb-8 flex flex-col items-center">
+          <div class="p-3 rounded-2xl bg-white/95 border border-accent-400/40 shadow-xl shadow-accent-500/10 mb-4 inline-block">
+            <img src="logo.jpeg" alt="AR Fotografías Logo" class="h-20 w-auto object-contain" onerror="this.src='https://picsum.photos/200/100?random=logo'">
           </div>
           <h1 class="font-serif text-3xl font-semibold tracking-wider text-white">ESTUDIO AR</h1>
           <p class="text-[11px] tracking-[0.25em] accent-gradient-text uppercase font-semibold mt-1">Galería & Selección Fine Art</p>
@@ -193,12 +189,25 @@
             </div>
           </div>
 
-          <button type="submit" id="login-submit-btn"
+          <button type="submit"
             class="w-full py-3.5 px-4 accent-gradient-bg text-slate-950 font-bold rounded-xl hover:brightness-110 active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 shadow-xl shadow-accent-500/10">
-            <span id="login-btn-text">Acceder a la Galería</span>
+            <span>Acceder a la Galería</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
         </form>
+
+        <!-- Credentials Hint / Quick Pre-fill helper -->
+        <div class="mt-8 pt-6 border-t border-slate-800/80 text-xs text-slate-400 space-y-2">
+          <p class="font-medium text-slate-300">Accesos Demo predeterminados:</p>
+          <div class="flex items-center justify-between bg-slate-900/50 p-2 rounded-lg border border-slate-800">
+            <span><strong>Admin:</strong> admin / admin123</span>
+            <button onclick="fillLogin('admin', 'admin123')" class="text-accent-400 hover:underline">Usar</button>
+          </div>
+          <div class="flex items-center justify-between bg-slate-900/50 p-2 rounded-lg border border-slate-800">
+            <span><strong>Cliente Demo:</strong> cliente1 / cliente123</span>
+            <button onclick="fillLogin('cliente1', 'cliente123')" class="text-accent-400 hover:underline">Usar</button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -210,8 +219,8 @@
       <!-- Top Floating Navigation Bar -->
       <header class="glass-nav sticky top-0 z-40 px-4 lg:px-8 py-3.5 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-slate-900/90 border border-accent-400/40 flex items-center justify-center text-accent-400 shadow-lg shadow-accent-500/5">
-            <i data-lucide="camera" class="w-5 h-5"></i>
+          <div class="p-1.5 rounded-xl bg-white/90 border border-accent-400/40 flex items-center justify-center shadow-lg shadow-accent-500/5">
+            <img src="logo.jpeg" alt="AR Logo" class="h-8 w-auto object-contain" onerror="this.src='https://picsum.photos/100/50?random=logo'">
           </div>
           <div>
             <span class="font-serif font-bold text-lg text-white tracking-wider block leading-none">ESTUDIO AR</span>
@@ -349,7 +358,7 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
           <div>
             <h2 class="font-serif text-3xl font-semibold text-white">Panel de Administración</h2>
-            <p class="text-xs text-slate-400 mt-1">Gestión de clientes, sincronización en tiempo real con Firestore y Google Drive.</p>
+            <p class="text-xs text-slate-400 mt-1">Gestión de clientes, sincronización con Google Drive y seguimiento de selecciones.</p>
           </div>
           <button onclick="openNewClientModal()" class="px-4 py-2.5 accent-gradient-bg text-slate-950 font-bold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-accent-500/10 hover:brightness-110">
             <i data-lucide="user-plus" class="w-4 h-4"></i>
@@ -431,8 +440,8 @@
                 <i data-lucide="users" class="w-5 h-5"></i>
               </div>
               <div>
-                <h3 class="text-lg font-medium text-white">Clientes Registrados (Firestore Nube)</h3>
-                <p class="text-xs text-slate-400">Credenciales sincronizadas de manera persistente en la nube</p>
+                <h3 class="text-lg font-medium text-white">Clientes Registrados</h3>
+                <p class="text-xs text-slate-400">Credenciales de acceso e IDs de carpetas asociadas en Google Drive</p>
               </div>
             </div>
           </div>
@@ -455,30 +464,12 @@
           </div>
         </section>
 
-        <!-- GLOBAL CONFIGURATION / GOOGLE DRIVE API KEY -->
-        <section class="glass-card rounded-3xl p-6 border border-slate-800 space-y-4">
-          <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
-            <i data-lucide="key" class="w-5 h-5 text-accent-400"></i>
-            <div>
-              <h3 class="text-sm font-semibold text-white">Configuración API de Google Drive</h3>
-              <p class="text-xs text-slate-400">Clave API de Google Cloud para sincronización con carpetas de Drive.</p>
-            </div>
-          </div>
-          <div class="flex flex-col sm:flex-row gap-3">
-            <input type="text" id="config-api-key" placeholder="AIzaSy..." 
-              class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-accent-400 font-mono">
-            <button onclick="saveApiKey()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-accent-400 rounded-xl text-xs font-semibold border border-slate-700 transition-colors">
-              Guardar API Key
-            </button>
-          </div>
-        </section>
-
       </main>
 
       <!-- Footer -->
       <footer class="border-t border-slate-900 py-6 px-4 text-center text-xs text-slate-500 space-y-1">
         <p>© 2026 Estudio Fotográfico AR — Selección Fine Art</p>
-        <p class="text-[10px] text-slate-600">Sistema Seguro de Selección Privada de Fotografía • Firestore Sync Activo</p>
+        <p class="text-[10px] text-slate-600">Sistema Seguro de Selección Privada de Fotografía</p>
       </footer>
     </div>
   </div>
@@ -590,74 +581,22 @@
           <button type="button" onclick="closeClientModal()" class="px-4 py-2 bg-slate-900 text-slate-400 hover:text-white rounded-xl text-xs font-medium border border-slate-800">
             Cancelar
           </button>
-          <button type="submit" id="client-modal-submit-btn" class="px-4 py-2 accent-gradient-bg text-slate-950 font-bold rounded-xl text-xs hover:brightness-110">
-            Guardar en Nube
+          <button type="submit" class="px-4 py-2 accent-gradient-bg text-slate-950 font-bold rounded-xl text-xs hover:brightness-110">
+            Guardar Cliente
           </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- FIREBASE MODULES AND APPLICATION LOGIC -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { 
-      getAuth, 
-      signInAnonymously, 
-      signInWithCustomToken, 
-      onAuthStateChanged 
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { 
-      getFirestore, 
-      doc, 
-      getDoc, 
-      setDoc, 
-      updateDoc, 
-      deleteDoc, 
-      onSnapshot, 
-      collection 
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
+  <!-- JavaScript Application Logic -->
+  <script>
     // =================================================================
-    // INITIALIZATION & FIREBASE SETUP
+    // INITIAL SYSTEM DATA & CONSTANTS
     // =================================================================
     
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'estudio-ar-app';
-    const firebaseConfig = typeof __firebase_config !== 'undefined' 
-      ? JSON.parse(__firebase_config) 
-      : {
-          apiKey: "AIzaSyDummyKeyForFallbackOnly",
-          authDomain: "estudio-ar.firebaseapp.com",
-          projectId: "estudio-ar",
-          storageBucket: "estudio-ar.appspot.com",
-          messagingSenderId: "123456789",
-          appId: "1:123456789:web:abcdef"
-        };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let firebaseUser = null;
-    let isDbInitialized = false;
-
-    // Collections Paths
-    const USERS_COLLECTION_PATH = ['artifacts', appId, 'public', 'data', 'usuarios'];
-    const SELECTIONS_COLLECTION_PATH = ['artifacts', appId, 'public', 'data', 'selecciones'];
-
-    // Global state arrays & objects
-    window.currentUser = null;
-    window.usersList = [];
-    window.currentPhotos = [];
-    window.currentFilter = 'all';
-    window.currentLightboxIndex = 0;
-    window.currentZoomLevel = 1;
-    window.driveApiKey = 'AIzaSyBiSKGFbVBCNXRBgU6DBb88ILpfwwHb8rQ'; // Default default API key
-
-    window.selectedAdminClient = null;
-    window.adminPhotos = [];
-    window.adminActiveTab = 'approved';
-    window.activeClientVotes = {};
+    // HARDCODED API KEY FOR DRIVE ACCESS
+    const HARDCODED_DRIVE_API_KEY = "AIzaSyBiSKGFbVBCNXRBgU6DBb88ILpfwwHb8rQ";
 
     const INITIAL_USERS = [
       {
@@ -675,6 +614,14 @@
         rol: "cliente",
         clienteNombre: "Boda Sofia & Mateo",
         driveFolderId: "1-DEMO_FOLDER_ID_SOFIA_MATEO"
+      },
+      {
+        id: "usr_cliente2",
+        user: "cliente2",
+        pass: "cliente123",
+        rol: "cliente",
+        clienteNombre: "Quinceañera Valentina",
+        driveFolderId: "1-DEMO_FOLDER_ID_VALENTINA"
       }
     ];
 
@@ -689,261 +636,168 @@
       { id: "img_008", name: "ESTUDIO_AR_008.jpg", url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80", thumbnail: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" }
     ];
 
-    // Authenticate Firebase safely first
-    async function initFirebaseAuth() {
-      try {
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          await signInAnonymously(auth);
-        }
-      } catch (err) {
-        console.warn("Auth token fallback to anonymous:", err);
-        try {
-          await signInAnonymously(auth);
-        } catch(e) {
-          console.error("Firebase auth error:", e);
-        }
-      }
-    }
+    let currentUser = null;
+    let usersList = [];
+    let currentPhotos = [];
+    let currentFilter = 'all';
+    let currentLightboxIndex = 0;
+    let currentZoomLevel = 1;
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        firebaseUser = user;
-        if (!isDbInitialized) {
-          isDbInitialized = true;
-          setupRealtimeUsersListener();
-        }
-      }
-    });
-
-    // Real-time Users Listener
-    function setupRealtimeUsersListener() {
-      if (!firebaseUser) return;
-      const usersColRef = collection(db, USERS_COLLECTION_PATH[0], USERS_COLLECTION_PATH[1], USERS_COLLECTION_PATH[2], USERS_COLLECTION_PATH[3], USERS_COLLECTION_PATH[4]);
-      
-      onSnapshot(usersColRef, async (snapshot) => {
-        const list = [];
-        snapshot.forEach(docSnap => {
-          list.push({ id: docSnap.id, ...docSnap.data() });
-        });
-
-        // Seed default users if empty
-        if (list.length === 0) {
-          for (const defaultUser of INITIAL_USERS) {
-            const userDocRef = doc(db, USERS_COLLECTION_PATH[0], USERS_COLLECTION_PATH[1], USERS_COLLECTION_PATH[2], USERS_COLLECTION_PATH[3], USERS_COLLECTION_PATH[4], defaultUser.id);
-            await setDoc(userDocRef, defaultUser);
-          }
-          return; // Next snapshot will populate list
-        }
-
-        window.usersList = list;
-        
-        // Refresh views if active
-        if (window.currentUser) {
-          // Refresh session user data if edited remotely
-          const updatedSelf = window.usersList.find(u => u.id === window.currentUser.id);
-          if (updatedSelf) window.currentUser = updatedSelf;
-
-          if (window.currentUser.rol === 'admin') {
-            window.initAdminPanel();
-          }
-        }
-      }, (error) => {
-        console.error("Error Listening to Users:", error);
-        window.showToast("Error al conectar con la base de datos remota", "error");
-      });
-    }
+    let selectedAdminClient = null;
+    let adminPhotos = [];
+    let adminActiveTab = 'approved';
 
     // =================================================================
-    // REALTIME SELECTION VOTE SYNC
+    // THEME MANAGEMENT
     // =================================================================
     
-    let activeSelectionsUnsubscribe = null;
-
-    function listenClientSelections(clientId, callback) {
-      if (!firebaseUser || !clientId) return;
-
-      if (activeSelectionsUnsubscribe) {
-        activeSelectionsUnsubscribe();
-      }
-
-      const selDocRef = doc(db, SELECTIONS_COLLECTION_PATH[0], SELECTIONS_COLLECTION_PATH[1], SELECTIONS_COLLECTION_PATH[2], SELECTIONS_COLLECTION_PATH[3], SELECTIONS_COLLECTION_PATH[4], clientId);
-
-      activeSelectionsUnsubscribe = onSnapshot(selDocRef, (docSnap) => {
-        if (docSnap.exists()) {
-          window.activeClientVotes = docSnap.data().votes || {};
-        } else {
-          window.activeClientVotes = {};
-        }
-        if (callback) callback(window.activeClientVotes);
-      }, (err) => {
-        console.error("Error escuchando selecciones:", err);
-      });
+    function setTheme(themeName) {
+      const root = document.documentElement;
+      root.classList.remove('theme-gold', 'theme-rosegold', 'theme-silver');
+      root.classList.add(`theme-${themeName}`);
+      localStorage.setItem('ESTUDIO_AR_THEME', themeName);
     }
 
-    async function saveVoteForClient(clientId, photoId, status) {
-      if (!firebaseUser) return;
-      
-      const votes = { ...window.activeClientVotes };
-      if (status === 'none') {
-        delete votes[photoId];
+    // =================================================================
+    // INITIALIZATION & STORAGE MANAGEMENT
+    // =================================================================
+    
+    window.onload = function() {
+      lucide.createIcons();
+
+      const savedTheme = localStorage.getItem('ESTUDIO_AR_THEME') || 'gold';
+      setTheme(savedTheme);
+
+      loadUsersFromStorage();
+
+      const sessionUser = localStorage.getItem('ESTUDIO_AR_SESION');
+      if (sessionUser) {
+        currentUser = JSON.parse(sessionUser);
+        initAuthenticatedSession();
       } else {
-        votes[photoId] = status;
+        showView('view-login');
       }
 
-      window.activeClientVotes = votes;
-      const selDocRef = doc(db, SELECTIONS_COLLECTION_PATH[0], SELECTIONS_COLLECTION_PATH[1], SELECTIONS_COLLECTION_PATH[2], SELECTIONS_COLLECTION_PATH[3], SELECTIONS_COLLECTION_PATH[4], clientId);
-      
-      try {
-        await setDoc(selDocRef, { votes, updatedAt: new Date().toISOString() }, { merge: true });
-      } catch (err) {
-        console.error("Error guardando voto en Firestore:", err);
-        window.showToast("Error al guardar la selección en la nube", "error");
+      document.addEventListener('keydown', handleGlobalKeydown);
+    };
+
+    function loadUsersFromStorage() {
+      const storedUsers = localStorage.getItem('ESTUDIO_AR_USUARIOS');
+      if (storedUsers) {
+        try {
+          usersList = JSON.parse(storedUsers);
+        } catch(e) {
+          usersList = INITIAL_USERS;
+        }
+      } else {
+        usersList = INITIAL_USERS;
+        saveUsersList();
       }
     }
 
-    // =================================================================
-    // CLIENT CREATION & DELETION IN FIRESTORE
-    // =================================================================
-
-    window.saveClientForm = async function(e) {
-      e.preventDefault();
-      if (!firebaseUser) {
-        window.showToast("Conectando con el servidor, reintente en un segundo...", "info");
-        return;
-      }
-
-      const btn = document.getElementById('client-modal-submit-btn');
-      btn.disabled = true;
-      btn.textContent = 'Guardando...';
-
-      const id = document.getElementById('client-form-id').value;
-      const nombre = document.getElementById('client-form-nombre').value.trim();
-      const user = document.getElementById('client-form-user').value.trim();
-      const pass = document.getElementById('client-form-pass').value.trim();
-      const driveId = document.getElementById('client-form-driveid').value.trim();
-
-      const docId = id || 'usr_' + Date.now();
-      const userDocRef = doc(db, USERS_COLLECTION_PATH[0], USERS_COLLECTION_PATH[1], USERS_COLLECTION_PATH[2], USERS_COLLECTION_PATH[3], USERS_COLLECTION_PATH[4], docId);
-
-      const payload = {
-        id: docId,
-        user: user,
-        pass: pass,
-        rol: 'cliente',
-        clienteNombre: nombre,
-        driveFolderId: driveId,
-        updatedAt: new Date().toISOString()
-      };
-
-      try {
-        await setDoc(userDocRef, payload, { merge: true });
-        window.showToast(id ? 'Cliente actualizado en Firestore' : 'Cliente guardado en Firestore');
-        window.closeClientModal();
-      } catch (err) {
-        console.error("Error guardando cliente:", err);
-        window.showToast("Error al guardar cliente en Firestore", "error");
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Guardar en Nube';
-      }
-    };
-
-    window.deleteClient = async function(id) {
-      if (!firebaseUser) return;
-      if (confirm('¿Estás seguro de eliminar este cliente de la nube? Perderá acceso en todos los dispositivos.')) {
-        try {
-          const userDocRef = doc(db, USERS_COLLECTION_PATH[0], USERS_COLLECTION_PATH[1], USERS_COLLECTION_PATH[2], USERS_COLLECTION_PATH[3], USERS_COLLECTION_PATH[4], id);
-          await deleteDoc(userDocRef);
-          
-          // Delete client selections
-          const selDocRef = doc(db, SELECTIONS_COLLECTION_PATH[0], SELECTIONS_COLLECTION_PATH[1], SELECTIONS_COLLECTION_PATH[2], SELECTIONS_COLLECTION_PATH[3], SELECTIONS_COLLECTION_PATH[4], id);
-          await deleteDoc(selDocRef);
-
-          window.showToast('Cliente eliminado de Firestore');
-        } catch (err) {
-          console.error("Error eliminando cliente:", err);
-          window.showToast("Error al eliminar cliente", "error");
-        }
-      }
-    };
+    function saveUsersList() {
+      localStorage.setItem('ESTUDIO_AR_USUARIOS', JSON.stringify(usersList));
+    }
 
     // =================================================================
-    // AUTHENTICATION LOGIC WITH FIRESTORE
+    // AUTHENTICATION LOGIC
     // =================================================================
     
-    window.handleLogin = async function(e) {
+    function fillLogin(u, p) {
+      document.getElementById('login-username').value = u;
+      document.getElementById('login-password').value = p;
+    }
+
+    function handleLogin(e) {
       e.preventDefault();
       const userVal = document.getElementById('login-username').value.trim();
       const passVal = document.getElementById('login-password').value.trim();
 
-      if (!window.usersList || window.usersList.length === 0) {
-        window.showToast('Cargando usuarios desde Firestore...', 'info');
-        return;
-      }
+      loadUsersFromStorage();
 
-      const found = window.usersList.find(u => u.user.toLowerCase() === userVal.toLowerCase() && u.pass === passVal);
+      const found = usersList.find(u => u.user.toLowerCase() === userVal.toLowerCase() && u.pass === passVal);
 
       if (found) {
-        window.currentUser = found;
-        localStorage.setItem('ESTUDIO_AR_SESION_USERID', found.id);
-        window.showToast(`¡Bienvenido/a ${window.currentUser.clienteNombre}!`, 'success');
-        window.initAuthenticatedSession();
+        currentUser = found;
+        localStorage.setItem('ESTUDIO_AR_SESION', JSON.stringify(currentUser));
+        showToast(`¡Bienvenido/a ${currentUser.clienteNombre}!`, 'success');
+        initAuthenticatedSession();
       } else {
-        window.showToast('Usuario o contraseña incorrectos', 'error');
+        showToast('Usuario o contraseña incorrectos', 'error');
       }
-    };
+    }
 
-    window.logout = function() {
-      window.currentUser = null;
-      localStorage.removeItem('ESTUDIO_AR_SESION_USERID');
-      if (activeSelectionsUnsubscribe) activeSelectionsUnsubscribe();
+    function logout() {
+      currentUser = null;
+      localStorage.removeItem('ESTUDIO_AR_SESION');
       document.getElementById('main-app-container').classList.add('hidden');
-      window.showView('view-login');
-      window.showToast('Sesión cerrada');
-    };
+      showView('view-login');
+      showToast('Sesión cerrada');
+    }
 
-    window.initAuthenticatedSession = function() {
+    function initAuthenticatedSession() {
       document.getElementById('view-login').classList.add('hidden');
       document.getElementById('main-app-container').classList.remove('hidden');
 
       const adminBadge = document.getElementById('admin-badge');
       const navTitle = document.getElementById('nav-client-title');
 
-      if (window.currentUser.rol === 'admin') {
+      if (currentUser.rol === 'admin') {
         adminBadge.classList.remove('hidden');
         adminBadge.classList.add('flex');
         navTitle.textContent = "Panel General de Administración";
-        window.showView('view-admin-panel');
-        window.initAdminPanel();
+        showView('view-admin-panel');
+        initAdminPanel();
       } else {
         adminBadge.classList.add('hidden');
         adminBadge.classList.remove('flex');
-        navTitle.textContent = window.currentUser.clienteNombre;
-        window.showView('view-client-gallery');
-        window.loadClientPhotos(window.currentUser);
+        navTitle.textContent = currentUser.clienteNombre;
+        showView('view-client-gallery');
+        loadClientPhotos(currentUser);
       }
-    };
+    }
 
-    window.showView = function(viewId) {
+    function showView(viewId) {
       document.getElementById('view-login').classList.add('hidden');
       document.getElementById('view-client-gallery').classList.add('hidden');
       document.getElementById('view-admin-panel').classList.add('hidden');
 
       const target = document.getElementById(viewId);
       if (target) target.classList.remove('hidden');
-    };
+    }
 
     // =================================================================
-    // DRIVE API & PHOTO LOADER
+    // VOTE / APPROVAL PERSISTENCE BY CLIENT
+    // =================================================================
+    
+    function getVotesStorageKey(clientId) {
+      return `ESTADOS_FOTOS_AR_${clientId}`;
+    }
+
+    function getVotesForClient(clientId) {
+      const data = localStorage.getItem(getVotesStorageKey(clientId));
+      return data ? JSON.parse(data) : {};
+    }
+
+    function saveVoteForClient(clientId, photoId, status) {
+      const votes = getVotesForClient(clientId);
+      if (status === 'none') {
+        delete votes[photoId];
+      } else {
+        votes[photoId] = status;
+      }
+      localStorage.setItem(getVotesStorageKey(clientId), JSON.stringify(votes));
+    }
+
+    // =================================================================
+    // DRIVE API & SAMPLE DATA LOADER
     // =================================================================
     
     async function fetchPhotosFromDriveFolder(folderId) {
-      if (window.driveApiKey && folderId && !folderId.startsWith('1-DEMO')) {
+      if (HARDCODED_DRIVE_API_KEY && folderId && !folderId.startsWith('1-DEMO')) {
         try {
           const query = encodeURIComponent(`'${folderId}' in parents and mimeType contains 'image/' and trashed = false`);
-          const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=files(id,name,thumbnailLink,webContentLink)&key=${window.driveApiKey}`;
+          const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=files(id,name,thumbnailLink,webContentLink)&key=${HARDCODED_DRIVE_API_KEY}`;
           
           const response = await fetch(url);
           if (!response.ok) throw new Error('Error al conectar con Google Drive API');
@@ -959,14 +813,14 @@
           }
         } catch (err) {
           console.warn('Drive API fallback:', err);
-          window.showToast('Uso de imágenes de demostración (Drive no conectado)', 'info');
+          showToast('Modo de prueba activo: usando catálogo de muestra Fine Art', 'info');
         }
       }
 
       return SAMPLE_PHOTOS.map((p, i) => ({
         ...p,
         id: `${folderId}_${p.id}`,
-        name: `${window.currentUser ? window.currentUser.user.toUpperCase() : 'FOTO'}_${(i+1).toString().padStart(3, '0')}.jpg`
+        name: `${currentUser ? currentUser.user.toUpperCase() : 'FOTO'}_${(i+1).toString().padStart(3, '0')}.jpg`
       }));
     }
 
@@ -974,7 +828,7 @@
     // CLIENT GALLERY LOGIC
     // =================================================================
     
-    window.loadClientPhotos = async function(clientObj) {
+    async function loadClientPhotos(clientObj) {
       const grid = document.getElementById('gallery-grid');
       const loader = document.getElementById('gallery-loading');
       const emptyState = document.getElementById('gallery-empty');
@@ -985,30 +839,27 @@
       loader.classList.remove('hidden');
       emptyState.classList.add('hidden');
 
-      window.currentPhotos = await fetchPhotosFromDriveFolder(clientObj.driveFolderId);
+      currentPhotos = await fetchPhotosFromDriveFolder(clientObj.driveFolderId);
       loader.classList.add('hidden');
 
-      // Listen to real-time votes for this client
-      listenClientSelections(clientObj.id, () => {
-        window.renderClientGallery();
-      });
-    };
+      renderClientGallery();
+    }
 
-    window.renderClientGallery = function() {
+    function renderClientGallery() {
       const grid = document.getElementById('gallery-grid');
       const emptyState = document.getElementById('gallery-empty');
-      const votes = window.activeClientVotes || {};
+      const votes = getVotesForClient(currentUser.id);
 
-      const filtered = window.currentPhotos.filter(photo => {
+      const filtered = currentPhotos.filter(photo => {
         const status = votes[photo.id] || 'pending';
-        if (window.currentFilter === 'all') return true;
-        if (window.currentFilter === 'approved') return status === 'approved';
-        if (window.currentFilter === 'rejected') return status === 'rejected';
-        if (window.currentFilter === 'pending') return status === 'pending';
+        if (currentFilter === 'all') return true;
+        if (currentFilter === 'approved') return status === 'approved';
+        if (currentFilter === 'rejected') return status === 'rejected';
+        if (currentFilter === 'pending') return status === 'pending';
         return true;
       });
 
-      window.updateClientStats(votes);
+      updateClientStats(votes);
       grid.innerHTML = '';
 
       if (filtered.length === 0) {
@@ -1018,7 +869,7 @@
 
       emptyState.classList.add('hidden');
 
-      filtered.forEach((photo) => {
+      filtered.forEach((photo, index) => {
         const status = votes[photo.id] || 'pending';
         const card = document.createElement('div');
         card.className = "photo-card glass-card rounded-2xl overflow-hidden border border-slate-800 group flex flex-col justify-between";
@@ -1033,7 +884,7 @@
         }
 
         card.innerHTML = `
-          <div class="relative aspect-[4/3] bg-slate-900 overflow-hidden cursor-pointer" onclick="openLightbox(${window.currentPhotos.indexOf(photo)})">
+          <div class="relative aspect-[4/3] bg-slate-900 overflow-hidden cursor-pointer" onclick="openLightbox(${currentPhotos.indexOf(photo)})">
             <img src="${photo.thumbnail}" alt="${photo.name}" loading="lazy" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
             
@@ -1079,26 +930,28 @@
       });
 
       lucide.createIcons();
-    };
+    }
 
-    window.votePhoto = function(photoId, newStatus, event) {
+    function votePhoto(photoId, newStatus, event) {
       if (event) event.stopPropagation();
-      const currentVotes = window.activeClientVotes || {};
+      const currentVotes = getVotesForClient(currentUser.id);
       const currentStatus = currentVotes[photoId];
 
       if (currentStatus === newStatus) {
-        saveVoteForClient(window.currentUser.id, photoId, 'none');
+        saveVoteForClient(currentUser.id, photoId, 'none');
       } else {
-        saveVoteForClient(window.currentUser.id, photoId, newStatus);
+        saveVoteForClient(currentUser.id, photoId, newStatus);
       }
 
+      renderClientGallery();
+      
       if (!document.getElementById('lightbox-modal').classList.contains('hidden')) {
-        window.updateLightboxControls();
+        updateLightboxControls();
       }
-    };
+    }
 
-    window.setFilter = function(filterType) {
-      window.currentFilter = filterType;
+    function setFilter(filterType) {
+      currentFilter = filterType;
       ['all', 'approved', 'rejected', 'pending'].forEach(f => {
         const btn = document.getElementById(`filter-btn-${f}`);
         if (f === filterType) {
@@ -1107,64 +960,64 @@
           btn.className = "px-4 py-2 rounded-xl text-xs font-medium transition-all text-slate-400 hover:text-white hover:bg-slate-800";
         }
       });
-      window.renderClientGallery();
-    };
+      renderClientGallery();
+    }
 
-    window.updateClientStats = function(votes) {
+    function updateClientStats(votes) {
       let approved = 0;
       let rejected = 0;
       let pending = 0;
 
-      window.currentPhotos.forEach(p => {
+      currentPhotos.forEach(p => {
         const st = votes[p.id] || 'pending';
         if (st === 'approved') approved++;
         else if (st === 'rejected') rejected++;
         else pending++;
       });
 
-      document.getElementById('stat-total').textContent = window.currentPhotos.length;
+      document.getElementById('stat-total').textContent = currentPhotos.length;
       document.getElementById('stat-approved').textContent = approved;
       document.getElementById('stat-rejected').textContent = rejected;
       document.getElementById('stat-pending').textContent = pending;
 
-      document.getElementById('filter-count-all').textContent = window.currentPhotos.length;
+      document.getElementById('filter-count-all').textContent = currentPhotos.length;
       document.getElementById('filter-count-approved').textContent = approved;
       document.getElementById('filter-count-rejected').textContent = rejected;
       document.getElementById('filter-count-pending').textContent = pending;
-    };
+    }
 
     // =================================================================
     // LIGHTBOX CONTROLS
     // =================================================================
     
-    window.openLightbox = function(index) {
-      window.currentLightboxIndex = index;
-      window.currentZoomLevel = 1;
+    function openLightbox(index) {
+      currentLightboxIndex = index;
+      currentZoomLevel = 1;
       const modal = document.getElementById('lightbox-modal');
       modal.classList.remove('hidden');
-      window.updateLightboxContent();
-    };
+      updateLightboxContent();
+    }
 
-    window.closeLightbox = function() {
+    function closeLightbox() {
       document.getElementById('lightbox-modal').classList.add('hidden');
-    };
+    }
 
-    window.updateLightboxContent = function() {
-      const photo = window.currentPhotos[window.currentLightboxIndex];
+    function updateLightboxContent() {
+      const photo = currentPhotos[currentLightboxIndex];
       if (!photo) return;
 
       document.getElementById('lightbox-img').src = photo.url;
       document.getElementById('lightbox-filename').textContent = photo.name;
-      document.getElementById('lightbox-counter').textContent = `${window.currentLightboxIndex + 1} / ${window.currentPhotos.length}`;
+      document.getElementById('lightbox-counter').textContent = `${currentLightboxIndex + 1} / ${currentPhotos.length}`;
 
-      window.currentZoomLevel = 1;
-      window.applyZoom();
-      window.updateLightboxControls();
-    };
+      currentZoomLevel = 1;
+      applyZoom();
+      updateLightboxControls();
+    }
 
-    window.updateLightboxControls = function() {
-      const photo = window.currentPhotos[window.currentLightboxIndex];
-      const votes = window.activeClientVotes || {};
+    function updateLightboxControls() {
+      const photo = currentPhotos[currentLightboxIndex];
+      const votes = getVotesForClient(currentUser.id);
       const status = votes[photo.id] || 'pending';
 
       const btnApprove = document.getElementById('lightbox-btn-approve');
@@ -1180,40 +1033,49 @@
         btnApprove.className = "flex-1 sm:flex-none sm:min-w-[150px] py-3 px-5 rounded-2xl border border-slate-800 bg-slate-900/90 text-emerald-400 hover:bg-emerald-950/40 text-xs font-bold flex items-center justify-center gap-2";
         btnReject.className = "flex-1 sm:flex-none sm:min-w-[150px] py-3 px-5 rounded-2xl border border-slate-800 bg-slate-900/90 text-rose-400 hover:bg-rose-950/40 text-xs font-bold flex items-center justify-center gap-2";
       }
-    };
+    }
 
-    window.toggleLightboxVote = function(status) {
-      const photo = window.currentPhotos[window.currentLightboxIndex];
-      window.votePhoto(photo.id, status);
-    };
+    function toggleLightboxVote(status) {
+      const photo = currentPhotos[currentLightboxIndex];
+      votePhoto(photo.id, status);
+    }
 
-    window.nextLightboxImage = function() {
-      if (window.currentLightboxIndex < window.currentPhotos.length - 1) {
-        window.currentLightboxIndex++;
-        window.updateLightboxContent();
+    function nextLightboxImage() {
+      if (currentLightboxIndex < currentPhotos.length - 1) {
+        currentLightboxIndex++;
+        updateLightboxContent();
       }
-    };
+    }
 
-    window.prevLightboxImage = function() {
-      if (window.currentLightboxIndex > 0) {
-        window.currentLightboxIndex--;
-        window.updateLightboxContent();
+    function prevLightboxImage() {
+      if (currentLightboxIndex > 0) {
+        currentLightboxIndex--;
+        updateLightboxContent();
       }
-    };
+    }
 
-    window.zoomLightbox = function(delta) {
-      window.currentZoomLevel = Math.max(0.5, Math.min(3, window.currentZoomLevel + delta));
-      window.applyZoom();
-    };
+    function zoomLightbox(delta) {
+      currentZoomLevel = Math.max(0.5, Math.min(3, currentZoomLevel + delta));
+      applyZoom();
+    }
 
-    window.applyZoom = function() {
+    function applyZoom() {
       const wrapper = document.getElementById('lightbox-img-wrapper');
-      wrapper.style.transform = `scale(${window.currentZoomLevel})`;
-    };
+      wrapper.style.transform = `scale(${currentZoomLevel})`;
+    }
 
-    window.downloadSingleCurrentLightboxImage = async function() {
-      const photo = window.currentPhotos[window.currentLightboxIndex];
-      window.showToast(`Iniciando descarga de ${photo.name}...`);
+    function handleGlobalKeydown(e) {
+      const modal = document.getElementById('lightbox-modal');
+      if (modal.classList.contains('hidden')) return;
+
+      if (e.key === 'ArrowRight') nextLightboxImage();
+      if (e.key === 'ArrowLeft') prevLightboxImage();
+      if (e.key === 'Escape') closeLightbox();
+    }
+
+    async function downloadSingleCurrentLightboxImage() {
+      const photo = currentPhotos[currentLightboxIndex];
+      showToast(`Iniciando descarga de ${photo.name}...`);
       try {
         const resp = await fetch(photo.url);
         const blob = await resp.blob();
@@ -1224,24 +1086,24 @@
         a.click();
         document.body.removeChild(a);
       } catch (e) {
-        window.showToast('Error al descargar directamente la fotografía', 'error');
+        showToast('Error al descargar directamente la fotografía', 'error');
       }
-    };
+    }
 
     // =================================================================
     // ZIP BULK DOWNLOAD LOGIC (JSZIP)
     // =================================================================
     
     async function downloadApprovedZipForClient(clientId, clientName, photosList) {
-      const votes = window.activeClientVotes || {};
+      const votes = getVotesForClient(clientId);
       const approvedPhotos = photosList.filter(p => votes[p.id] === 'approved');
 
       if (approvedPhotos.length === 0) {
-        window.showToast('No hay fotografías aprobadas para descargar', 'error');
+        showToast('El cliente no tiene fotografías aprobadas para descargar', 'error');
         return;
       }
 
-      window.showToast(`Generando archivo .ZIP para ${approvedPhotos.length} fotos aprobadas...`, 'info');
+      showToast(`Generando archivo .ZIP para ${approvedPhotos.length} fotos aprobadas...`, 'info');
 
       try {
         const zip = new JSZip();
@@ -1268,36 +1130,36 @@
         a.click();
         document.body.removeChild(a);
 
-        window.showToast('¡Descarga .ZIP completada con éxito!', 'success');
+        showToast('¡Descarga .ZIP completada con éxito!', 'success');
       } catch (err) {
         console.error(err);
-        window.showToast('Ocurrió un error al empaquetar el archivo ZIP', 'error');
+        showToast('Ocurrió un error al empaquetar el archivo ZIP', 'error');
       }
     }
 
-    window.downloadApprovedZip = function() {
-      downloadApprovedZipForClient(window.currentUser.id, window.currentUser.clienteNombre, window.currentPhotos);
-    };
+    function downloadApprovedZip() {
+      downloadApprovedZipForClient(currentUser.id, currentUser.clienteNombre, currentPhotos);
+    }
 
-    window.downloadAdminSelectedClientZip = function() {
-      if (!window.selectedAdminClient) return;
-      downloadApprovedZipForClient(window.selectedAdminClient.id, window.selectedAdminClient.clienteNombre, window.adminPhotos);
-    };
+    function downloadAdminSelectedClientZip() {
+      if (!selectedAdminClient) return;
+      downloadApprovedZipForClient(selectedAdminClient.id, selectedAdminClient.clienteNombre, adminPhotos);
+    }
 
     // =================================================================
     // ADMIN DASHBOARD LOGIC
     // =================================================================
     
-    window.initAdminPanel = function() {
-      window.renderAdminClientsTable();
-      window.populateAdminClientSelect();
-    };
+    function initAdminPanel() {
+      renderAdminClientsTable();
+      populateAdminClientSelect();
+    }
 
-    window.renderAdminClientsTable = function() {
+    function renderAdminClientsTable() {
       const tbody = document.getElementById('admin-clients-table-body');
       tbody.innerHTML = '';
 
-      window.usersList.forEach(u => {
+      usersList.forEach(u => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-900/60 transition-colors";
 
@@ -1332,24 +1194,22 @@
       });
 
       lucide.createIcons();
-    };
+    }
 
-    window.populateAdminClientSelect = function() {
+    function populateAdminClientSelect() {
       const select = document.getElementById('admin-client-select');
-      const currentVal = select.value;
       select.innerHTML = '<option value="">-- Seleccionar un Cliente --</option>';
 
-      const clients = window.usersList.filter(u => u.rol === 'cliente');
+      const clients = usersList.filter(u => u.rol === 'cliente');
       clients.forEach(c => {
         const opt = document.createElement('option');
         opt.value = c.id;
         opt.textContent = `${c.clienteNombre} (${c.user})`;
-        if (c.id === currentVal) opt.selected = true;
         select.appendChild(opt);
       });
-    };
+    }
 
-    window.handleAdminClientSelect = async function() {
+    async function handleAdminClientSelect() {
       const select = document.getElementById('admin-client-select');
       const clientId = select.value;
 
@@ -1357,24 +1217,20 @@
         document.getElementById('admin-client-summary').classList.add('hidden');
         document.getElementById('admin-gallery-grid').innerHTML = '';
         document.getElementById('admin-gallery-empty').classList.remove('hidden');
-        window.selectedAdminClient = null;
+        selectedAdminClient = null;
         return;
       }
 
-      window.selectedAdminClient = window.usersList.find(u => u.id === clientId);
+      selectedAdminClient = usersList.find(u => u.id === clientId);
       document.getElementById('admin-client-summary').classList.remove('hidden');
       document.getElementById('admin-client-summary').classList.add('grid');
 
-      window.adminPhotos = await fetchPhotosFromDriveFolder(window.selectedAdminClient.driveFolderId);
-      
-      // Listen to selections for selected client
-      listenClientSelections(clientId, () => {
-        window.renderAdminGallery();
-      });
-    };
+      adminPhotos = await fetchPhotosFromDriveFolder(selectedAdminClient.driveFolderId);
+      renderAdminGallery();
+    }
 
-    window.setAdminTab = function(tab) {
-      window.adminActiveTab = tab;
+    function setAdminTab(tab) {
+      adminActiveTab = tab;
       const btnApproved = document.getElementById('admin-tab-approved');
       const btnAll = document.getElementById('admin-tab-all');
 
@@ -1386,29 +1242,29 @@
         btnApproved.className = "px-3.5 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white";
       }
 
-      window.renderAdminGallery();
-    };
+      renderAdminGallery();
+    }
 
-    window.renderAdminGallery = function() {
-      if (!window.selectedAdminClient) return;
+    function renderAdminGallery() {
+      if (!selectedAdminClient) return;
 
       const grid = document.getElementById('admin-gallery-grid');
       const empty = document.getElementById('admin-gallery-empty');
-      const votes = window.activeClientVotes || {};
+      const votes = getVotesForClient(selectedAdminClient.id);
 
       let approvedCount = 0;
       let rejectedCount = 0;
-      window.adminPhotos.forEach(p => {
+      adminPhotos.forEach(p => {
         if (votes[p.id] === 'approved') approvedCount++;
         if (votes[p.id] === 'rejected') rejectedCount++;
       });
 
-      document.getElementById('admin-stat-total').textContent = window.adminPhotos.length;
+      document.getElementById('admin-stat-total').textContent = adminPhotos.length;
       document.getElementById('admin-stat-approved').textContent = approvedCount;
       document.getElementById('admin-stat-rejected').textContent = rejectedCount;
 
-      const filtered = window.adminPhotos.filter(p => {
-        if (window.adminActiveTab === 'approved') return votes[p.id] === 'approved';
+      const filtered = adminPhotos.filter(p => {
+        if (adminActiveTab === 'approved') return votes[p.id] === 'approved';
         return true;
       });
 
@@ -1416,7 +1272,7 @@
 
       if (filtered.length === 0) {
         empty.classList.remove('hidden');
-        empty.textContent = window.adminActiveTab === 'approved' ? 'El cliente aún no ha aprobado fotografías.' : 'Carpeta vacía.';
+        empty.textContent = adminActiveTab === 'approved' ? 'El cliente aún no ha aprobado fotografías.' : 'Carpeta vacía.';
         return;
       }
 
@@ -1442,13 +1298,13 @@
         `;
         grid.appendChild(card);
       });
-    };
+    }
 
     // =================================================================
     // CLIENT MODAL FORM ACTIONS
     // =================================================================
     
-    window.openNewClientModal = function() {
+    function openNewClientModal() {
       document.getElementById('client-form-id').value = '';
       document.getElementById('client-form-nombre').value = '';
       document.getElementById('client-form-user').value = '';
@@ -1456,14 +1312,52 @@
       document.getElementById('client-form-driveid').value = '';
       document.getElementById('modal-client-title').textContent = "Registrar Nuevo Cliente";
       document.getElementById('modal-client-form').classList.remove('hidden');
-    };
+    }
 
-    window.closeClientModal = function() {
+    function closeClientModal() {
       document.getElementById('modal-client-form').classList.add('hidden');
-    };
+    }
 
-    window.editClient = function(id) {
-      const target = window.usersList.find(u => u.id === id);
+    function saveClientForm(e) {
+      e.preventDefault();
+      const id = document.getElementById('client-form-id').value;
+      const nombre = document.getElementById('client-form-nombre').value.trim();
+      const user = document.getElementById('client-form-user').value.trim();
+      const pass = document.getElementById('client-form-pass').value.trim();
+      const driveId = document.getElementById('client-form-driveid').value.trim();
+
+      loadUsersFromStorage();
+
+      if (id) {
+        const index = usersList.findIndex(u => u.id === id);
+        if (index !== -1) {
+          usersList[index].clienteNombre = nombre;
+          usersList[index].user = user;
+          usersList[index].pass = pass;
+          usersList[index].driveFolderId = driveId;
+        }
+        showToast('Cliente actualizado con éxito');
+      } else {
+        const newObj = {
+          id: 'usr_' + Date.now(),
+          user: user,
+          pass: pass,
+          rol: 'cliente',
+          clienteNombre: nombre,
+          driveFolderId: driveId
+        };
+        usersList.push(newObj);
+        showToast('Nuevo cliente registrado correctamente');
+      }
+
+      saveUsersList();
+      closeClientModal();
+      initAdminPanel();
+    }
+
+    function editClient(id) {
+      loadUsersFromStorage();
+      const target = usersList.find(u => u.id === id);
       if (!target) return;
 
       document.getElementById('client-form-id').value = target.id;
@@ -1474,31 +1368,23 @@
 
       document.getElementById('modal-client-title').textContent = "Editar Cliente";
       document.getElementById('modal-client-form').classList.remove('hidden');
-    };
+    }
 
-    // =================================================================
-    // THEME MANAGEMENT
-    // =================================================================
-    
-    window.setTheme = function(themeName) {
-      const root = document.documentElement;
-      root.classList.remove('theme-gold', 'theme-rosegold', 'theme-silver');
-      root.classList.add(`theme-${themeName}`);
-      localStorage.setItem('ESTUDIO_AR_THEME', themeName);
-    };
-
-    window.saveApiKey = function() {
-      const key = document.getElementById('config-api-key').value.trim();
-      window.driveApiKey = key;
-      localStorage.setItem('ESTUDIO_AR_API_KEY', key);
-      window.showToast('API Key guardada correctamente', 'success');
-    };
+    function deleteClient(id) {
+      if (confirm('¿Estás seguro de eliminar este cliente del sistema?')) {
+        loadUsersFromStorage();
+        usersList = usersList.filter(u => u.id !== id);
+        saveUsersList();
+        initAdminPanel();
+        showToast('Cliente eliminado');
+      }
+    }
 
     // =================================================================
     // TOAST NOTIFICATIONS HELPER
     // =================================================================
     
-    window.showToast = function(msg, type = 'info') {
+    function showToast(msg, type = 'info') {
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
       
@@ -1525,36 +1411,7 @@
         toast.classList.add('opacity-0', 'translate-y-2');
         setTimeout(() => toast.remove(), 300);
       }, 4000);
-    };
-
-    // =================================================================
-    // ONLOAD SETUP
-    // =================================================================
-    
-    window.addEventListener('load', async () => {
-      lucide.createIcons();
-
-      // Load Saved Theme
-      const savedTheme = localStorage.getItem('ESTUDIO_AR_THEME') || 'gold';
-      window.setTheme(savedTheme);
-
-      // Load API Key
-      const savedKey = localStorage.getItem('ESTUDIO_AR_API_KEY');
-      if (savedKey) window.driveApiKey = savedKey;
-      document.getElementById('config-api-key').value = window.driveApiKey;
-
-      // Start Firebase Auth
-      await initFirebaseAuth();
-
-      document.addEventListener('keydown', (e) => {
-        const modal = document.getElementById('lightbox-modal');
-        if (modal.classList.contains('hidden')) return;
-
-        if (e.key === 'ArrowRight') window.nextLightboxImage();
-        if (e.key === 'ArrowLeft') window.prevLightboxImage();
-        if (e.key === 'Escape') window.closeLightbox();
-      });
-    });
+    }
   </script>
 </body>
 </html>
